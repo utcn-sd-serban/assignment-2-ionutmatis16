@@ -31,8 +31,15 @@ html {
 
 .card {
     margin: auto !important;
-    width: 93% !important;
+    width: 90% !important;
 }
+
+.myCard {
+    margin: auto !important;
+    width: 100% !important;
+    background-color: #f7f9fb !important;
+}
+
 
 .tagButton {
     background-color: #8fc1e3 !important;
@@ -56,4 +63,9 @@ html {
 
 .alignCenter {
     text-align: center;
+}
+
+.fakeLink:hover {
+    cursor: pointer;
+    text-decoration-line: underline;
 }

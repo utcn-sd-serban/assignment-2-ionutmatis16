@@ -1,12 +1,12 @@
-import { EventEmitter } from "events";
+import {EventEmitter} from "events";
 
 class SOUserModel extends EventEmitter {
     constructor() {
         super();
         this.state = {
             sOUsers: [{
-                sOUsername: "u1",
-                sOPassword: "p1"
+                sOUsername: "b",
+                sOPassword: "b"
             }, {
                 sOUsername: "u2",
                 sOPassword: "p2"
@@ -14,7 +14,12 @@ class SOUserModel extends EventEmitter {
             newSOUser: {
                 sOUsername: "",
                 sOPassword: ""
-            }
+            },
+            loggedInSOUser: "Hacker",
+            invalidNameOrPassword: false,
+            nameAlreadyExists: false,
+            loginFormOpen: false,
+            registerFormOpen: false
         }
     }
 
@@ -31,7 +36,7 @@ class SOUserModel extends EventEmitter {
 
     changeNewSOUserProperty(property, value) {
         this.state = {
-            ...this.state, // contains all the properites of the old state, copied 
+            ...this.state, // contains all the properties of the old state, copied
             newSOUser: {
                 ...this.state.newSOUser,
                 [property]: value // the property contained will be changed
@@ -39,6 +44,15 @@ class SOUserModel extends EventEmitter {
         };
         this.emit("change", this.state); // the state has changed, passed the new state as arg
     }
+
+    changeMainStateProperty(property, value) {
+        this.state = {
+            ...this.state,
+            [property]: value
+        };
+        this.emit("change", this.state);
+    }
+
 
 }
 

@@ -1,69 +1,59 @@
 import {EventEmitter} from "events";
 
-class QuestionModel extends EventEmitter {  // observable in js
-    // can attach listeners, to detach them, to emit events
+class AnswerModel extends EventEmitter {
     constructor() {
         super();
-        // define some state
         this.state = {
-            questions: [{
+            answers: [{
                 id: 0,
-                userName: "u1",
-                title: "First question",
-                text: "text of first question",
+                userName: "u2",
+                questionId: 1,
+                text: "text of first answer",
                 creationDate: new Date().toLocaleString(),
-                tags: ["tag1", "tag2"],
                 score: 0
             },
                 {
                     id: 1,
-                    userName: "u2",
-                    title: "Second question",
-                    text: "text of second question",
+                    userName: "b",
+                    questionId: 0,
+                    text: "text of second answer",
                     creationDate: new Date().toLocaleString(),
-                    tags: ["tag1", "tag3"],
-                    score: 1
+                    score: -1
                 }
             ],
             currentId: 1,
-            newQuestion: {
-                id: -1,
+            newAnswer: {
                 userName: "", // not shown on form
-                title: "",
+                questionId: -1,
                 text: "",
                 creationDate: new Date().toLocaleString(),
-                tags: [],
                 score: 0
             },
-            filterTitle: true, // false will filter tags
-            filterText: "",
-            filteredQuestions: []
-        };
+            answersToDisplay: []
+        }
     }
 
-    addQuestion(userName, title, text, tags) {
-        // operate on a clone state 
+    addAnswer(userName, questionId, text) {
         this.state = {
             ...this.state, // contains all the properties of the old state, copied
-            currentId: ++this.state.currentId,
-            questions: this.state.questions.concat([{
-                id: this.state.currentId,
+            currentId: this.currentId + 1,
+            answers: this.state.answers.concat([{
+                id: this.currentId,
                 userName: userName,
-                title: title,
+                questionId: questionId,
                 text: text,
                 creationDate: new Date().toLocaleString(),
-                tags: tags,
                 score: 0
             }]) // but I modify the questions array
         };
         this.emit("change", this.state); // the state has changed, passed the new state as arg
     }
 
-    changeNewQuestionProperty(property, value) {
+    changeNewAnswerProperty(property, value) {
         this.state = {
             ...this.state, // contains all the properties of the old state, copied
-            newQuestion: {
-                ...this.state.newQuestion,
+            newAnswer: {
+                ...this.state.newAnswer,
                 [property]: value // the property contained will be changed
             }
         };
@@ -79,6 +69,6 @@ class QuestionModel extends EventEmitter {  // observable in js
     }
 }
 
-const questionModel = new QuestionModel();
+const answerModel = new AnswerModel();
 
-export default questionModel; // make it singleton
+export default answerModel;
