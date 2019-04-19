@@ -28,7 +28,6 @@ const MyNavbar = ({
                            onChange={e => onSearchChange("filterText", e.target.value)}
                            className="form-control mr-sm-2 search-input mySearch" type="search"
                            placeholder="Search..."/>
-
                     {
                         filterTitle === true ?
                             <button onClick={onChangeFilter} className="btn myButton btn-search my-2 my-sm-0 "
@@ -51,8 +50,9 @@ const MyNavbar = ({
         }
 
         {
-            (loggedInAsButton === true) ? <div id="loggedIn">Logged in as <a href="/" style={{"color": "#31708e"}}>
-                <strong> {sOUsername} </strong></a></div> : <div/>
+            (loggedInAsButton === true) ?
+                <div id="loggedIn">Logged in as <span className="fakeLink" style={{"color": "#31708e"}}>
+                <strong> {sOUsername} </strong></span></div> : <div/>
         }
 
         {

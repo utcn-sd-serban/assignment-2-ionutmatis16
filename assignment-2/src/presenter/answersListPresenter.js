@@ -12,12 +12,21 @@ class AnswersListPresenter {
         answerModel.changeNewAnswerProperty(property, value);
     };
 
-    onViewAnswers = (index) => {
-        let answersToDisplay = answerModel.state.answers.filter(
-            answer => answer.questionId === index
-        );
-        answerModel.changeMainStateProperty("answersToDisplay", answersToDisplay);
-        window.location.assign("#/question/" + index);
+    onChangeNewAnswer = (answerId, value) => {
+        answerModel.changeNewTextForAnswer(answerId, value);
+    };
+
+    onEditPress = (answerId) => {
+        answerModel.changeEditButtonPressedForAnswer(answerId);
+    };
+
+    onEditSubmit = (answerId) => {
+        answerModel.editAnswer(answerId);
+        answerModel.changeEditButtonPressedForAnswer(answerId);
+    };
+
+    onDeleteAnswer = (answerId) => {
+        answerModel.deleteAnswer(answerId);
     };
 }
 

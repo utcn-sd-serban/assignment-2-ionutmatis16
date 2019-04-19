@@ -3,27 +3,16 @@ import sOUserModel from "../model/sOUserModel";
 class SOUserPresenter {
     onLogin = () => {
         let newSOUser = sOUserModel.state.newSOUser;
-        let sOUsers = sOUserModel.state.sOUsers;
-        let loginSuccess = false;
+        let loginSuccess = sOUserModel.loginSuccess(newSOUser.sOUsername, newSOUser.sOPassword);
 
-        for (let i = 0; i < sOUsers.length; i++) {
-            if (newSOUser.sOUsername === sOUsers[i].sOUsername) {
-                if (newSOUser.sOPassword === sOUsers[i].sOPassword) {
-                    loginSuccess = true;
-                }
-
-            }
-        }
+        sOUserModel.changeNewSOUserProperty("sOUsername", "");
+        sOUserModel.changeNewSOUserProperty("sOPassword", "");
 
         if (loginSuccess) {
-            sOUserModel.changeNewSOUserProperty("sOUsername", "");
-            sOUserModel.changeNewSOUserProperty("sOPassword", "");
             sOUserModel.changeMainStateProperty("loggedInSOUser", newSOUser.sOUsername);
             sOUserModel.changeMainStateProperty("invalidNameOrPassword", false);
             window.location.assign("#/questions");
         } else {
-            sOUserModel.changeNewSOUserProperty("sOUsername", "");
-            sOUserModel.changeNewSOUserProperty("sOPassword", "");
             sOUserModel.changeMainStateProperty("invalidNameOrPassword", true);
             window.location.assign("#/");
         }
@@ -71,13 +60,10 @@ class SOUserPresenter {
     };
 
     checkForSOUsername = (sOUsername) => {
-        let foundName = false;
-        for (let i = 0; i < sOUserModel.state.sOUsers.length; i++) {
-            if (sOUsername === sOUserModel.state.sOUsers[i].sOUsername) {
-                foundName = true;
-            }
-        }
-        foundName ? sOUserModel.changeMainStateProperty("nameAlreadyExists", true) :
+        let foundName = sOUserModel.nameExists(sOUsername);
+        foundName ?
+            sOUserModel.changeMainStateProperty("nameAlreadyExists", true)
+            :
             sOUserModel.changeMainStateProperty("nameAlreadyExists", false);
     };
 }

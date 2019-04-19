@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 import {HashRouter, Switch, Route} from "react-router-dom";
-import SmartLoginRegister from "./view/SmartComponents/SmartLoginRegister";
-import SmartQuestionsList from "./view/SmartComponents/SmartQuestionsList";
-import SmartAnswersList from "./view/SmartComponents/SmartAnswersList";
-import SmartFilteredQuestions from "./view/SmartComponents/SmartFilteredQuestions";
+import SmartLoginRegister from "./view/smart/SmartLoginRegister";
+import SmartQuestionsList from "./view/smart/SmartQuestionsList";
+import SmartAnswersList from "./view/smart/SmartAnswersList";
+import SmartFilteredQuestions from "./view/smart/SmartFilteredQuestions";
 
 const App = () => (
     <div className="App">

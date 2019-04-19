@@ -5,9 +5,9 @@ class QuestionsListPresenter {
     onCreate = () => {
         let newQuestion = questionModel.state.newQuestion;
         let newTags;
-        newTags = newQuestion.tags.length > 0 ? newQuestion.tags.split(" ") : [];
+        newTags = newQuestion.tags.length > 0 ? newQuestion.tags.trim().split(" ") : [];
         questionModel.addQuestion(sOUserModel.state.loggedInSOUser, newQuestion.title,
-            newQuestion.text, newTags);
+            newQuestion.text, Array.from(new Set(newTags)));
         questionModel.changeNewQuestionProperty("title", "");
         questionModel.changeNewQuestionProperty("text", "");
         questionModel.changeNewQuestionProperty("tags", "");
@@ -28,21 +28,20 @@ class QuestionsListPresenter {
 
     onSearchClick = () => {
         let filterText = questionModel.state.filterText;
-        let filterTitle = questionModel.state.filterTitle;
+        let filterName = questionModel.state.filterTitle ? "title" : "tags";
 
-        if (filterTitle) {
-            let filteredQuestions = questionModel.state.questions.filter(
-                question => question.title.toLowerCase().includes(filterText.toLowerCase())
-            );
-            questionModel.changeMainStateProperty("filteredQuestions", filteredQuestions);
-            window.location.assign("#/questions/filter");
-        } else {
-            let filteredQuestions = questionModel.state.questions.filter(
-                question => question.tags.includes(filterText.toLowerCase())
-            );
-            questionModel.changeMainStateProperty("filteredQuestions", filteredQuestions);
-            window.location.assign("#/questions/filter");
-        }
+        questionModel.filterQuestions(filterName, filterText);
+        window.location.assign("#/questions/filter");
+    };
+
+    onAvailableTagsClick = (tagName) => {
+        let currentTags = questionModel.state.newQuestion.tags;
+        questionModel.changeNewQuestionProperty("tags", currentTags.toString().concat(tagName + " "));
+    };
+
+
+    onViewAnswers = (index) => {
+        window.location.assign("#/question/" + index);
     }
 }
 

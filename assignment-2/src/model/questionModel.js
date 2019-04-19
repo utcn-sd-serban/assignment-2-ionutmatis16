@@ -13,16 +13,16 @@ class QuestionModel extends EventEmitter {  // observable in js
                 text: "text of first question",
                 creationDate: new Date().toLocaleString(),
                 tags: ["tag1", "tag2"],
-                score: 0
+                score: 1
             },
                 {
                     id: 1,
-                    userName: "u2",
+                    userName: "b",
                     title: "Second question",
                     text: "text of second question",
                     creationDate: new Date().toLocaleString(),
                     tags: ["tag1", "tag3"],
-                    score: 1
+                    score: -1
                 }
             ],
             currentId: 1,
@@ -52,7 +52,7 @@ class QuestionModel extends EventEmitter {  // observable in js
                 title: title,
                 text: text,
                 creationDate: new Date().toLocaleString(),
-                tags: tags,
+                tags: tags.sort(),
                 score: 0
             }]) // but I modify the questions array
         };
@@ -74,6 +74,35 @@ class QuestionModel extends EventEmitter {  // observable in js
         this.state = {
             ...this.state,
             [property]: value
+        };
+        this.emit("change", this.state);
+    }
+
+    filterQuestions(filterProperty, filterText) {
+        let filteredQuestions = this.state.questions.filter(
+            question => question[filterProperty].includes(filterText));
+        this.changeMainStateProperty("filteredQuestions", filteredQuestions);
+    }
+
+    getAllTags() {
+        let allQuestions = this.state.questions;
+        let allTags = new Set();
+        for (let i = 0; i < allQuestions.length; i++) {
+            allQuestions[i].tags.forEach(tag => allTags.add(tag));
+        }
+        return Array.from(allTags).sort();
+    }
+
+    updateQuestionScore(questionId, newScore) {
+        let questions = this.state.questions;
+        for (let i = 0; i < questions.length; i++) {
+            if (questions[i].id === questionId) {
+                questions[i].score = newScore;
+            }
+        }
+        this.state = {
+            ...this.state,
+            questions: questions
         };
         this.emit("change", this.state);
     }

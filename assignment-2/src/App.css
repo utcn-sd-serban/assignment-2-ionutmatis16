@@ -69,3 +69,8 @@ html {
     cursor: pointer;
     text-decoration-line: underline;
 }
+
+.vote:hover {
+    color: #8fc1e3;
+    cursor: pointer;
+}

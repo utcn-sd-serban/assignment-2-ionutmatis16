@@ -1,17 +1,22 @@
 import React, {Component} from 'react';
 import questionModel from '../../model/questionModel';
-import QuestionsList from '../DumbComponents/QuestionsList';
+import QuestionsList from '../dumb/QuestionsList';
 import questionsListPresenter from '../../presenter/questionsListPresenter';
 import sOUserModel from "../../model/sOUserModel";
-import answersListPresenter from "../../presenter/answersListPresenter";
 import sOUserPresenter from "../../presenter/sOUserPresenter";
+import votePresenter from "../../presenter/votePresenter";
 
 const mapModelStateToComponentState = (questionModel) => ({
     questions: questionModel.questions,
     newQuestion: questionModel.newQuestion,
     filterTitle: questionModel.filterTitle,
-    filterText: questionModel.filterText
+    filterText: questionModel.filterText,
+    allTags: allTags(),
 });
+
+function allTags() {
+    return questionModel.getAllTags();
+}
 
 // does not have any input, pulls everything from the model
 export default class SmartQuestionsList extends Component {
@@ -37,7 +42,10 @@ export default class SmartQuestionsList extends Component {
     render() {
         return <QuestionsList
             questions={this.state.questions}
+            allTags={this.state.allTags}
             newQuestion={this.state.newQuestion}
+            onVote={votePresenter.onVoteQuestion}
+
             onCreate={questionsListPresenter.onCreate}
             onChange={questionsListPresenter.onChange}
             sOUsername={sOUserModel.state.loggedInSOUser}
@@ -49,7 +57,8 @@ export default class SmartQuestionsList extends Component {
             onSearchChange={questionsListPresenter.onSearchChange}
             onLogout={sOUserPresenter.onLogout}
 
-            onViewAnswers={answersListPresenter.onViewAnswers}
+            onViewAnswers={questionsListPresenter.onViewAnswers}
+            onAvailableTagsClick={questionsListPresenter.onAvailableTagsClick}
         />
     }
 }

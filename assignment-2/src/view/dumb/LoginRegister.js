@@ -46,7 +46,9 @@ const LoginRegister = ({
                                             </div>
                                         </div>
                                     </form>
-                                    <button id="loginButton" onClick={onLogin}
+                                    <button id="loginButton"
+                                            disabled={!(newSOUser.sOUsername.length > 0 && newSOUser.sOPassword.length > 0)}
+                                            onClick={onLogin}
                                             className="btn btn-block answerSubmitButton">Login
                                     </button>
                                     {
@@ -124,8 +126,6 @@ const LoginRegister = ({
                 )
             }
         </div>
-
-
     </div>
 );
 

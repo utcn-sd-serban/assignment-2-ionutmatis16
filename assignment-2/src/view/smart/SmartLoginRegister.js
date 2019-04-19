@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import sOUserModel from '../../model/sOUserModel';
-import LoginRegister from '../DumbComponents/LoginRegister';
+import LoginRegister from '../dumb/LoginRegister';
 import sOUserPresenter from '../../presenter/sOUserPresenter';
 
 const mapModelStateToComponentState = (sOUserModel) => ({

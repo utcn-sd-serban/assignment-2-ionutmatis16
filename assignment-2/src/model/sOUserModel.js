@@ -53,6 +53,26 @@ class SOUserModel extends EventEmitter {
         this.emit("change", this.state);
     }
 
+    loginSuccess(username, password) {
+        let users = this.state.sOUsers;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].sOUsername === username && users[i].sOPassword === password) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    nameExists(sOUsername) {
+        let users = this.state.sOUsers;
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].sOUsername === sOUsername) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
 

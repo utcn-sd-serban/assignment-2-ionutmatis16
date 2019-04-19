@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import questionModel from '../../model/questionModel';
 import sOUserModel from "../../model/sOUserModel";
-import FilteredQuestions from "../DumbComponents/FilteredQuestions";
+import FilteredQuestions from "../dumb/FilteredQuestions";
+import questionsListPresenter from "../../presenter/questionsListPresenter";
+import votePresenter from "../../presenter/votePresenter";
 
 const mapModelStateToComponentState = (questionModel) => ({
     filteredQuestions: questionModel.filteredQuestions,
@@ -36,6 +38,9 @@ export default class SmartFilteredQuestions extends Component {
             sOUsername={sOUserModel.state.loggedInSOUser}
             filterTitle={this.state.filterTitle}
             filterText={this.state.filterText}
+
+            onViewAnswers={questionsListPresenter.onViewAnswers}
+            onVote={votePresenter.onVoteQuestion}
         />
     }
 }
